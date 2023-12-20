@@ -22,6 +22,6 @@
 
 ![begin condition of the app](begin_condition.png)
 
-### `Состояние приложения вовремя работы:`
+### `Состояние приложения во время работы:`
 
 ![final condition of the app](final_condition.png)
