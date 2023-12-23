@@ -4,6 +4,10 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
+begin_condition.png
+final_condition.png
+chatHistory.txt
+serverLogger.txt
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml

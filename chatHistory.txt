@@ -1,5 +1,0 @@
-name подключился к беседе
-name, 0:13:55: kdkdk
-name, 0:14:30: kdkdk
-kdka;lskdf подключился к беседе
-kdka;lskdf, 0:14:40: adfasdf
