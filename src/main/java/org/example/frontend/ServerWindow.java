@@ -34,6 +34,7 @@ public class ServerWindow extends JFrame {
         add(serverStatusSwitcher, BorderLayout.SOUTH);
 
         chat = new JTextArea();
+        chat.setEditable(false);
         JScrollPane scrollChat = new JScrollPane(chat);
         add(scrollChat);
 

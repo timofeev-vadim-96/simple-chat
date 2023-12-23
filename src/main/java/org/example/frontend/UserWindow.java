@@ -5,10 +5,7 @@ import org.example.model.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.List;
 
 /**
@@ -41,6 +38,7 @@ public class UserWindow extends JFrame {
         add(createSouthComponent(), BorderLayout.SOUTH);
 
         chat = new JTextArea();
+        chat.setEditable(false);
         JScrollPane scrollChat = new JScrollPane(chat);
         add(scrollChat);
 
@@ -62,6 +60,14 @@ public class UserWindow extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 textField.setText("");
+            }
+        });
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == '\n'){
+                    serverWindow.appendToChat(textField.getText());
+                }
             }
         });
         JButton sendButton = new JButton("Send");
