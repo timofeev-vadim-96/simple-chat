@@ -1,6 +1,6 @@
-package org.example.frontend;
+package org.example.model.server.view;
 
-import org.example.model.Server;
+import org.example.model.server.controller.Server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * Класс для создания окна сервера
  */
-public class ServerWindow extends JFrame {
+public class ServerUI extends JFrame implements ViewServerUI {
     private static final int WIDTH = 450;
     private static final int HEIGHT = 300;
 
@@ -22,9 +22,8 @@ public class ServerWindow extends JFrame {
     /**
      * Конструктор объекта окна сервера
      */
-    public ServerWindow() {
-        server = new Server();
-
+    public ServerUI(Server server) {
+        this.server = server;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
@@ -33,13 +32,23 @@ public class ServerWindow extends JFrame {
         Component serverStatusSwitcher = createStatusSwitchComponent();
         add(serverStatusSwitcher, BorderLayout.SOUTH);
 
-        chat = new JTextArea();
-        chat.setEditable(false);
-        JScrollPane scrollChat = new JScrollPane(chat);
+        JScrollPane scrollChat = createCentralComponent();
         add(scrollChat);
 
         setResizable(false);
         setVisible(true);
+    }
+
+    /**
+     * Метод, создающий центральный компонент окна с чатом
+     *
+     * @return не редактируемый чат с прокруткой
+     */
+    private JScrollPane createCentralComponent() {
+        chat = new JTextArea();
+        chat.setEditable(false);
+        JScrollPane scrollChat = new JScrollPane(chat);
+        return scrollChat;
     }
 
     /**
@@ -57,11 +66,11 @@ public class ServerWindow extends JFrame {
                     server.setStatus(true);
                     String activeServer = "The server is active now!\n";
                     chat.append(activeServer);
-                    server.writerLogg(activeServer);
+                    server.writeLogg(activeServer);
                 } else {
                     String alreadyActiveServer = "The server is already active!\n";
                     JOptionPane.showMessageDialog(startServer, alreadyActiveServer);
-                    server.writerLogg(alreadyActiveServer);
+                    server.writeLogg(alreadyActiveServer);
                 }
             }
         });
@@ -72,7 +81,7 @@ public class ServerWindow extends JFrame {
                 if (server.getStatus()) {
                     String disabledServer = "The server is disabled!\n";
                     chat.append(disabledServer);
-                    server.writerLogg(disabledServer);
+                    server.writeLogg(disabledServer);
                     server.setStatus(false); //в конце алгоритма, т.к. логи пишутся только при рабочем сервере
                 } else {
                     JOptionPane.showMessageDialog(startServer, "Server is already disabled!");
@@ -84,19 +93,12 @@ public class ServerWindow extends JFrame {
         return statusSwitcher;
     }
 
-    public Server getServer() {
-        return server;
-    }
-
     /**
-     * Метод для добавления в общий чат сообщений от пользователей, а также их сохранения в историю и их логирование
+     * Метод для добавления в общий чат сообщений от пользователей
      *
-     * @param userText сообщение
+     * @param message сообщение
      */
-    public void appendToChat(String userText) {
-        chat.append(userText);
-        server.sendUsers(userText);
-        server.writerLogg(userText);
-        server.writeHistory(userText);
+    public void handleMessage(String message) {
+        chat.append(message);
     }
 }
