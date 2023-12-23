@@ -24,7 +24,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return String.format("%s, %s: %s", userName, time, body);
+        return String.format("%s, %s: %s", time, userName, body);
     }
 
     /**
